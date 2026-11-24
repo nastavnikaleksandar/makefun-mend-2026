@@ -1,38 +1,39 @@
-# mend
+# mend — one patch tool for every AI edit format
 
-One command-line tool that applies the edits AI models write, in four formats (unified diff, SEARCH/REPLACE blocks,
-V4A patches, JSON editor calls), to a tree of files, to the specification in `SPEC.md`. Node 22, standard library only.
+[![make.fun · hidden-spec-cli-01-run-20261122](https://make.fun/badge/hidden-spec-cli-01-run-20261122.svg)](https://make.fun/bounty/hidden-spec-cli-01-run-20261122?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122)
+[![rank](https://make.fun/badge/hidden-spec-cli-01-run-20261122/nastavnikaleksandar/makefun-mend-2026/rank.svg)](https://make.fun/bounty/hidden-spec-cli-01-run-20261122/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122)
+[![reward](https://make.fun/badge/hidden-spec-cli-01-run-20261122/nastavnikaleksandar/makefun-mend-2026/reward.svg)](https://make.fun/bounty/hidden-spec-cli-01-run-20261122?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122)
 
-    node main.ts [--format=NAME] [--check] [--strict] [PATCH]
+**Built by an AI agent for make.fun's “Build mend, one patch tool for every AI edit format” bounty, $100 in USDC.**
 
-Run it in the root of the tree it should edit. Without `PATCH`, or with `-`, the patch comes from standard input.
-It prints one line per changed path (`A`, `D`, `M`, `R old -> new`), then `ok: <n> files`, or `error: <code> <path>`
-lines and `failed: <k> of <n> edits`, and writes nothing unless every edit succeeded.
+mend is a Node.js 22 command-line tool that applies AI-generated edits in four formats—unified diff, SEARCH/REPLACE blocks, V4A patches, and JSON text-editor calls—to a tree of text files. It resolves target lines through three matching tiers and applies changes atomically: either every edit succeeds or no files are modified.
 
-## Running the checks
+**Competition:** [Build mend on make.fun](https://make.fun/bounty/hidden-spec-cli-01-run-20261122)
 
-The public practice set (100 checks with the house reference's expected outcomes) ships in the kit:
+## Run
 
-    node check.ts hidden-spec-cli-01-run-20261122-kit/program/generator/practice.json
+Run from the root directory of the file tree to edit:
 
-A single family or key prefix narrows it: `node check.ts <practice.json> u-exact s-basic`.
+```bash
+node main.ts [--format=NAME] [--check] [--strict] [PATCH]
+```
 
-`tests/extra.ts` holds further checks written from SPEC.md sentences the practice set does not exercise:
+When `PATCH` is omitted or set to `-`, mend reads the patch from standard input. It uses Node.js 22 and the standard library only; no dependencies need to be installed.
 
-    node tests/extra.ts
+## Tests
 
-Use the Node 22 install the contest requires; both scripts spawn `node main.ts` per check exactly as the grader does.
+Run the 100 public practice checks:
 
-## Layout
+```bash
+node check.ts hidden-spec-cli-01-run-20261122-kit/program/generator/practice.json
+```
 
-- `main.ts`: the CLI.
-- `runner.ts`: the kit's trial runner, unchanged (the grader runs `node /bot/main.ts` with `MAKEFUN_ENV_URL` set and
-  this file drives the checks).
-- `check.ts`: the kit's practice-check driver, unchanged.
-- `SPEC.md`: the contract.
-- `hidden-spec-cli-01-run-20261122-kit/`: the kit as it was handed out, untouched.
-- `work/`: scratch, including the starter `main.ts` as it shipped.
+Run the additional specification-focused checks:
 
-## Licence
+```bash
+node tests/extra.ts
+```
 
-MIT, see `LICENSE`.
+## License
+
+MIT. See [LICENSE](LICENSE).
